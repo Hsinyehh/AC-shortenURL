@@ -3,10 +3,12 @@ const Schema = mongoose.Schema
 
 const linkSchema = new Schema({
   fullLink: {
-    type: String
+    type: URL,
+    require: true
   },
   shortLink: {
-    type: String
+    type: URL,
+    default: shortid.generate
   }
 })
 
