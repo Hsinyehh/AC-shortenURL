@@ -1,14 +1,20 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+
 const linkSchema = new Schema({
-  fullLink: {
-    type: URL,
+  full: {
+    type: String,
     require: true
   },
-  shortLink: {
-    type: URL,
-    default: shortid.generate
+  short: {
+    type: String,
+    require: true
+  },
+  clicks: {
+    type: Number,
+    require: true,
+    default: 0
   }
 })
 
