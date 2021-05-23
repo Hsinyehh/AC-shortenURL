@@ -24,13 +24,16 @@
           </tr>
         </thead>
         <tbody>
+          {{#each URLs}}
           <tr>
-            <td><a href="https://www.google.com">https://www.google.com</a></td>
-            <td><a href="/ghsgd">/ghsgd</a></td>
-            <td>1</td>
+            <td><a href="{{this.full}}">{{this.full}}</a></td>
+            <td><a href="{{this.short}}">{{this.short}}</a></td>
+            <td>{{this.clicks}}</td>
           </tr>
+          {{/each}}
         </tbody>
       </table>
+
     </div>
   </div>
 </div>

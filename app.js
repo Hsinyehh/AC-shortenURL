@@ -22,18 +22,35 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.get('/', (req, res) => {
-  res.render('index')
+  Link.find()
+    .lean()
+    .then(URLs => res.render('index', { URLs: URLs }))
+    .catch(error => console.log('error'))
+
 })
 
 app.post('/shortURL', async (req, res) => {
   await Link.create(
     {
       full: req.body.fullURL,
-      short: shortid.generate()
+      short: shortid.generate(),
     })
     .then(() => { res.redirect('/') })
     .catch(error => console.log('error'))
 })
+
+app.get('/:shortURL', async (req, res) => {
+  const URL = await Link.findOne({ short: req.params.shortURL })
+  if (URL === null) {
+    return res.sendStatus(404)
+  }
+
+  URL.clicks++
+  URL.save()
+  res.redirect(URL.full)
+
+})
+
 
 app.listen(port, () => {
   console.log(`The server is running on http://localhost:${port}`)
